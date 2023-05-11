@@ -12,26 +12,76 @@ jumpRight = pygame.image.load('./assets/images/RJUMP.png')
 guardLeft = pygame.image.load('./assets/images/LGUARD.png')
 guardRight = pygame.image.load('./assets/images/RGUARD.png')
 bg = pygame.image.load('./assets/backgrounds/background.png')
+bgmenu = pygame.image.load('./assets/backgrounds/menubg.png')
 bgm = pygame.mixer.music.load('./assets/musics/themesong.mp3')
 hitsong = pygame.mixer.Sound('./assets/musics/hit.wav')
+clicksong = pygame.mixer.Sound('./assets/musics/clickSound.wav')
 shurikensong = pygame.mixer.Sound('./assets/musics/shuriken.wav')
 rstand = pygame.image.load('./assets/images/RSTAND.png')
 lstand = pygame.image.load('./assets/images/LSTAND.png')
 Iicon = pygame.image.load('./assets/images/itachiAva.png')
 Nicon = pygame.image.load('./assets/images/naruto-icon-3.png')
-vid = Video("./assets/videos/intro.mp4")
-vid.set_size((800,600))
 Clock = pygame.time.Clock()
 font = pygame.font.SysFont('comicsans', 60, True)
+font40px = pygame.font.SysFont('comicsans', 40, True)
+menu = True
+class Button:
+    def __init__(self, txt, pos):
+        self.text = txt
+        self.pos = pos
+        self.button = pygame.rect.Rect((self.pos[0], self.pos[1]), (125, 65))
+
+    def draw(self):
+        pygame.draw.rect(DISPLAYSURF, 'white', self.button, 0, 5)
+        pygame.draw.rect(DISPLAYSURF, 'dark gray', [self.pos[0], self.pos[1], 125, 65], 5, 5)
+        text2 = font40px.render(self.text, True,(0,0,100))
+        DISPLAYSURF.blit(text2, (self.pos[0] + 18, self.pos[1] + 2))
+
+    def check_clicked(self):
+        if self.button.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0]:
+            clicksong.play()
+            return True
+        else:
+            return False
+def draw_menu():
+    command = -1
+    DISPLAYSURF.blit(bgmenu, (-220, 0))
+    button1 = Button('Play!', (50, 240))
+    button1.draw()
+    if button1.check_clicked():
+        command = 1
+    return command
 
 def intro():
+    global menu
+    vid = Video("./assets/videos/intro.mp4")
+    vid.set_size((800,600))
     while True:
         vid.draw(DISPLAYSURF,(0,0))
         pygame.display.update()
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 vid.close()
-                main_game()
+                pygame.mixer.music.play(-1)
+                pygame.mixer.music.set_volume(0.4)
+                menu_command = 0
+                run = True
+                while run:
+                    DISPLAYSURF.fill('light blue')
+                    if menu:
+                        menu_command = draw_menu()
+
+                        if menu_command != -1:
+                            menu = False
+                            main_game()
+                        
+                    for event in pygame.event.get():
+                        if event.type == pygame.QUIT:
+                            run = False
+
+                    pygame.display.flip()
+                
+
 class Player:
     def __init__(self, X = 30, Y = 500, W = 100, H = 100):
         self.x = X
@@ -177,7 +227,6 @@ class enemy:
 
 # Hàm dùng để gắn background cũng như tạo loạt ảnh di chuyển cho nhân vật
 def drawGameWithImage():
-    pygame.mixer.music.play()
     DISPLAYSURF.blit(bg,(0,0))
     itachi.draw(DISPLAYSURF)
     naruto.draw(DISPLAYSURF)
