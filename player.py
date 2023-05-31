@@ -292,7 +292,7 @@ class Player:
                else:
                     self.flip = True
                if self.name == "NineTails":
-                    self.hitbox = (self.rect.x + 13, self.rect.y, 70, 116)     
+                    self.hitbox = (self.rect.x + 13, self.rect.y, 70, 116)    
                     if self.flip == True:
                          self.offset[0] = 105
                     else:

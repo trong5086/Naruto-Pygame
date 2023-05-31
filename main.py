@@ -210,6 +210,10 @@ def main_game(charaters, mode, character_labels, background):
             if pygame.time.get_ticks() - last_count_update >= 1000:
                 # Sau 1 giây trừ biến intro_count đi 1 => Đếm ngược
                 intro_count -= 1
+                if len(listCharacters) > 0:
+                    for i in listCharacters:
+                        if i.name == 'NineTails':
+                            i.offset[0] = 40
                 last_count_update = pygame.time.get_ticks()
         #Cập nhật 2 nhân vật
         listCharacters[0].update()

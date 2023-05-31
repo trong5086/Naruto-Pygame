@@ -29,7 +29,7 @@ class Player:
           self.attack1 = [self.input_dict['attack1']]
           self.attack2 = [self.input_dict['attack2']]
           self.attack3 = [self.input_dict['attack3']]
-          self.shurikens = [self.input_dict['shurikens']]
+          self.shurikens = [self.input_dict['shurikens']]*4
           self.attack1_left = [self.input_dict['left']]*3 + [None]*3 + [self.input_dict['left']]*5 + self.attack1
           self.attack1_right = [self.input_dict['right']]*3 + [None]*3 + [self.input_dict['right']]*5 + self.attack1
           self.attack2_left = [self.input_dict['left']]*3 + [None]*3 + [self.input_dict['left']]*5 + self.attack2
@@ -118,19 +118,19 @@ class Player:
           elif self.is_close():
                #Case Bot bên trái nhân vật P1
                if self.is_left():
-                    sequence = [[self.input_dict['left'],self.input_dict['attack1'],self.input_dict['attack3']]]
+                    sequence = [[self.input_dict['left'],self.input_dict['attack1'],self.input_dict['attack3'],self.input_dict['attack2'], self.input_dict['shurikens'], self.input_dict['shurikens']]]
                #Case Bot bên phải nhân vật P1
                else:
-                    sequence = [[self.input_dict['right'],self.input_dict['attack1'],self.input_dict['attack2']]]
+                    sequence = [[self.input_dict['right'],self.input_dict['attack1'],self.input_dict['attack2'],self.input_dict['attack3'], self.input_dict['shurikens'], self.input_dict['shurikens']]]
                     
           #Case Bot bên trái với khoảng cách vừa phải
           elif self.is_left() & self.is_medium():
-               possible_sequences = [self.jump_left_downstrike, self.jump_left_downstrike,self.walk_left]
+               possible_sequences = [self.jump_left_downstrike, self.shurikens, self.jump_left_downstrike,self.walk_left]
                sequence = random.sample(possible_sequences,1)[0]
 
           #Case Bot bên phải với khoảng cách vừa phải
           elif self.is_right() & self.is_medium():
-               possible_sequences = [self.jump_right_downstrike, self.jump_right_downstrike,self.walk_right]
+               possible_sequences = [self.jump_right_downstrike, self.shurikens, self.jump_right_downstrike,self.walk_right]
                sequence = random.sample(possible_sequences,1)[0]
           return sequence
      
