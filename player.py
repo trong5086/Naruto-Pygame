@@ -18,11 +18,15 @@ class Player:
      def __init__(self, PLAYER ,X, Y, FLIP, DATA, SPRITES_SHEET, ANIMATION_STEPS, AI, NAME, ICON):
           self.name = NAME
           self.icon = ICON
+          #P1 hay P2
           self.player = PLAYER
+          #Kích thước
           self.size = DATA[0]
           self.offset = DATA[2]
+          #Độ phóng ảnh
           self.image_scale = DATA[1]
           self.rect = pygame.Rect((X,Y,80,115))
+          #Danh sách hoạt ảnh
           self.animation_list = self.loadimg(SPRITES_SHEET, ANIMATION_STEPS)
           self.action = 0 #0 đứng ,1 chạy, 2 bị gây dame, 3 chết, 4 loại tấn công thứ 1, 5 loại tấn công thứ 2, 6 loại tấn công thứ 3
           self.frame_index = 0 #index hoạt ảnh của action
@@ -126,6 +130,7 @@ class Player:
                     
      
                     if self.isJump == False:
+                         #Nhảy
                          if keys[self.input_dict['jump']] :
                               self.isJump = True
                               self.left = False
@@ -325,7 +330,7 @@ class Player:
                                         hitsong.play()
                                         shurikens.pop(shurikens.index(shuriken))
                          else:
-                              target.speed = 0
+                              target.speed = 0 #Chết không cho nhân vật chạy hay làm gì khác
                          if shuriken.x < 1000 and shuriken.x > 0:
                               shuriken.x += shuriken.vel
                          else:

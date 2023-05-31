@@ -10,9 +10,13 @@ class Button():
 		self.image = image
 		self.x_pos = pos[0]
 		self.y_pos = pos[1]
+		#Font
 		self.font = font
+		#Màu gốc, màu hover
 		self.base_color, self.hovering_color = base_color, hovering_color
+		#Text
 		self.text_input = text_input
+		#Font
 		self.text = self.font.render(self.text_input, True, self.base_color)
 		#Khởi tạo image = None
 		if self.image == None:

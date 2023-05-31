@@ -57,9 +57,11 @@ def intro():
 # Danh sách shuriken của P1, Danh sách shuriken của P2
 # Outut: Không có               
 def handle_input(p1, p2, ai, throwSpeed1, throwSpeed2, shurikens1, shurikens2):
+        #Bắt sự kiện nhấn nút
         keys = pygame.key.get_pressed()
         p1.move(DISPLAYSURF, p2, round_over, keys)
         p1.shuriken(throwSpeed1,shurikens1,p2, keys)
+        #Nếu AI True thì keys input sẽ được ngẫu nhiên random
         if p2.ai == True:
             ai_input = ai.heuristics()
             if ai_input is not None:
@@ -137,12 +139,12 @@ def main_game(charaters, mode, character_labels, background):
     #Khởi tạo tốc độ phóng shuriken
     throwSpeed1 = 0
     throwSpeed2 = 0
-    
-    
+
    
     while running:
+        #Tạo độ trễ
         pygame.time.delay(35)
-        
+
         #Tốc độ phóng thiết lập trong khoảng [0,3]
         if throwSpeed1 >= 0:
             throwSpeed1 += 1
@@ -158,30 +160,35 @@ def main_game(charaters, mode, character_labels, background):
                 running = False
                 pygame.quit()
                 sys.exit()
+            #Bắt sự kiện click chuột
             elif event.type == pygame.MOUSEBUTTONDOWN:
+                #Khi kết thúc round và có player được 2 điểm trước
                 if round_over and (score[0] == 2 or score[1] == 2):
                     clicksound.play()
+                    #Hiện nút quay về menu
                     if BTN_BACK.checkForInput(MOUSE_POS):
                         round_over = False
                         score[0]=0
                         score[1]=0
                         main_menu(DISPLAYSURF, main_game)
+                    #Hiện nút chơi lại
                     elif BTN_PLAY_AGAIN.checkForInput(MOUSE_POS):
                         round_over = False
                         score[0]=0
                         score[1]=0
                         main_game(charaters, mode, character_labels, background) 
                     pygame.display.update()
+        #reset màn hình
         DISPLAYSURF.fill((255,255,255))
     
         #Vẽ các thành phần từ module Draw lên main game
         dr.drawGameWithImage(DISPLAYSURF, listCharacters[0], listCharacters[1], listBackgrounds[background], shurikens1, shurikens2)
         #Vị trí chuột
         MOUSE_POS = pygame.mouse.get_pos()
-        #Nút Play
+        #Nút Play again
         BTN_PLAY_AGAIN = Button(image=pygame.image.load("./assets/images/Play Rect.png"), pos=(850, 550), 
                             text_input="Play again!", font=get_font(50, None), base_color="#d7fcd4", hovering_color="White")
-        # Nút Back
+        # Nút Back to main menu
         BTN_BACK = Button(image=pygame.image.load("./assets/images/Instructions Rect.png"), pos=(250, 550), 
                             text_input="Back to main menu!", font=get_font(50, None), base_color="#d7fcd4", hovering_color="White")
         if round_over and (score[0] == 2 or score[1] == 2):

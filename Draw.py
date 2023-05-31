@@ -31,7 +31,6 @@ def drawGameWithImage(screen, player, enemy, bg, shurikens1, shurikens2):
     for shuriken in shurikens2:
         shuriken.draw(screen)
 
-
 #Vẽ chữ
 #Input: chữ cẫn vẽ, loại font, màu, màu phông chữ, tọa độ x,y, màn hình chính
 #Output: Không có

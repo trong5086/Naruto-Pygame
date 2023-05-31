@@ -13,6 +13,7 @@ class Weapons:
         self.facing = F
         #Vận tốc bay của shuriken
         self.vel = 23 * self.facing
+        #Hibox shuriken
         self.hitbox = (self.x, self.y , 40, 40)  
 
     #Hàm vẽ shuriken
