@@ -6,7 +6,7 @@ import weapons as wp
 pygame.init()
 
 #Khởi tạo âm thanh
-hitsong = pygame.mixer.Sound('./assets/musics/hit.wav')
+hitsound = pygame.mixer.Sound('./assets/musics/hit.wav')
 shurikensong = pygame.mixer.Sound('./assets/musics/shuriken.wav')
 
 #Lớp nhân vật
@@ -80,7 +80,6 @@ class Player:
           if self.alive == True and round_over == False:
                if self.player == 2 and self.ai == True:
                     if keys[self.input_dict['attack1']] or keys[self.input_dict['attack2']] or keys[self.input_dict['attack3']] :
-                         # Khi nhấn nút r    
                          if keys[self.input_dict['attack1']] :
                               if self.name == "NineTails":
                                    if self.flip:
@@ -147,7 +146,7 @@ class Player:
                else:
                     # Kiểm tra người chơi thứ nhất chế độ người với người
                     if self.player == 1:
-                         # Khi người chơi nhấn nút r và t để tấn công
+                         # Khi người chơi nhấn nút r và t, y để tấn công
                          if keys[pygame.K_r] or keys[pygame.K_t] or keys[pygame.K_y]:
                               # Khi nhấn nút r    
                               if keys[pygame.K_r]:
@@ -162,6 +161,7 @@ class Player:
                                         else:
                                              self.attack(DISPLAYSURF, target, 1.25, 1.35) 
                                    self.attack_type = 1
+                              # Khi nhấn nút t
                               if keys[pygame.K_t]:
                                    if self.name == "NineTails":
                                         if self.flip:
@@ -174,6 +174,7 @@ class Player:
                                         else:
                                              self.attack(DISPLAYSURF, target, 1, 1.08) 
                                    self.attack_type = 2
+                              # Khi nhấn nút y
                               if keys[pygame.K_y]:
                                    if self.name == "NineTails":
                                         if self.flip:
@@ -218,9 +219,9 @@ class Player:
                                    self.jumpHeight = 7.5
                     # Kiểm tra người chơi thứ hai chế độ người với người
                     if self.player == 2:
-                         # Khi người chơi nhấn nút r và t để tấn công
+                         # Khi người chơi nhấn nút h và j, k để tấn công
                          if keys[pygame.K_h] or keys[pygame.K_j] or keys[pygame.K_k]:
-                              # Khi nhấn nút r    
+                              # Khi nhấn nút h    
                               if keys[pygame.K_h]:
                                    if self.name == "NineTails":
                                         if self.flip:
@@ -233,6 +234,7 @@ class Player:
                                         else:
                                              self.attack(DISPLAYSURF, target, 1.07, 1.2) 
                                    self.attack_type = 1
+                              # Khi nhấn nút j
                               if keys[pygame.K_j]:
                                    if self.name == "NineTails":
                                         if self.flip:
@@ -245,6 +247,7 @@ class Player:
                                         else:
                                              self.attack(DISPLAYSURF, target, 0.8, 0.95) 
                                    self.attack_type = 2
+                              # Khi nhấn nút k
                               if keys[pygame.K_k]:
                                    if self.name == "NineTails":
                                         if self.flip:
@@ -327,7 +330,7 @@ class Player:
                                    if shuriken.hitbox[0] + shuriken.hitbox[2] > target.hitbox[0] and shuriken.hitbox[0] + shuriken.hitbox[2] < target.hitbox[0] + target.hitbox[2]:    
                                         target.Hit()
                                         target.hit = True
-                                        hitsong.play()
+                                        hitsound.play()
                                         shurikens.pop(shurikens.index(shuriken))
                          else:
                               target.speed = 0 #Chết không cho nhân vật chạy hay làm gì khác
@@ -358,7 +361,7 @@ class Player:
                                    if shuriken.hitbox[0] + shuriken.hitbox[2] > target.hitbox[0] and shuriken.hitbox[0] + shuriken.hitbox[2] < target.hitbox[0] + target.hitbox[2]:    
                                         target.Hit()
                                         target.hit = True
-                                        hitsong.play()
+                                        hitsound.play()
                                         shurikens.pop(shurikens.index(shuriken))
                          else:
                               target.speed = 0
@@ -388,7 +391,7 @@ class Player:
                               if shuriken.hitbox[0] + shuriken.hitbox[2] > target.hitbox[0] and shuriken.hitbox[0] + shuriken.hitbox[2] < target.hitbox[0] + target.hitbox[2]:
                                    target.Hit()
                                    target.hit = True
-                                   hitsong.play()
+                                   hitsound.play()
                                    shurikens.pop(shurikens.index(shuriken))
                     else:
                          target.speed = 0
@@ -456,7 +459,7 @@ class Player:
                self.update_action(3)#3 Chết 
                self.offset[1] = 1
           elif self.hit == True:
-               hitsong.play()
+               hitsound.play()
                self.update_action(2)#2 bị gây dame
                self.offset[1] = 8
           elif self.attacking == True:
