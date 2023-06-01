@@ -11,6 +11,9 @@ pygame.init()
 bgmenu = pygame.image.load('./assets/backgrounds/menubg.png')
 clicksound = pygame.mixer.Sound('./assets/musics/clickSound.wav')
 
+#Biến phát theme song
+isplaying = True
+
 #Hàm tạo font
 #Input: Size chữ, Có in đậm True ngược lại None
 #Output: Trả về font cùng các thuộc tính sau khi khởi tạo
@@ -191,7 +194,8 @@ def instructions(screen,main_game):
         INSTRUCTIONS_CONTENT5 = get_font(34, None).render("SPACE - Throw Shuriken.", True, "Black")   
         INSTRUCTIONS_CONTENT6 = get_font(34, None).render("The second player is:", True, "Black") 
         INSTRUCTIONS_CONTENT7 = get_font(34, None).render("Up Key - Up, Right Key - Right, Left Key - Left", True, "Black")
-        INSTRUCTIONS_CONTENT8 = get_font(34, None).render("H - Attack 1, J - Attack 2, K - Attack 3 and L - Throw Shuriken.", True, "Black")      
+        INSTRUCTIONS_CONTENT8 = get_font(34, None).render("H - Attack 1, J - Attack 2, K - Attack 3 and L - Throw Shuriken.", True, "Black")
+        INSTRUCTIONS_CONTENT9 = get_font(34, None).render("In the match press ESC to QUIT ", True, "Black")            
      
         # Tạo tọa độ của text
         INSTRUCTIONS_RECT = INSTRUCTIONS_TEXT.get_rect(center=(510, 80))
@@ -203,6 +207,7 @@ def instructions(screen,main_game):
         INSTRUCTIONS_CONTENT6_RECT = INSTRUCTIONS_CONTENT6.get_rect(center=(500, 370))
         INSTRUCTIONS_CONTENT7_RECT = INSTRUCTIONS_CONTENT7.get_rect(center=(500, 410))
         INSTRUCTIONS_CONTENT8_RECT = INSTRUCTIONS_CONTENT8.get_rect(center=(500, 450))
+        INSTRUCTIONS_CONTENT9_RECT = INSTRUCTIONS_CONTENT9.get_rect(center=(500, 490))
 
         # Gắn chữ vào màn hình
         screen.blit(INSTRUCTIONS_TEXT, INSTRUCTIONS_RECT)
@@ -214,6 +219,7 @@ def instructions(screen,main_game):
         screen.blit(INSTRUCTIONS_CONTENT6, INSTRUCTIONS_CONTENT6_RECT)
         screen.blit(INSTRUCTIONS_CONTENT7, INSTRUCTIONS_CONTENT7_RECT)
         screen.blit(INSTRUCTIONS_CONTENT8, INSTRUCTIONS_CONTENT8_RECT)
+        screen.blit(INSTRUCTIONS_CONTENT9, INSTRUCTIONS_CONTENT9_RECT)
         # Nút Back
         INSTRUCTIONS_BACK = Button(image=None, pos=(900, 550), 
                             text_input="BACK", font=get_font(75, None), base_color="Black", hovering_color="Green")
@@ -463,8 +469,11 @@ def choose_P1_BOT(screen, main_game):
 #Input: màn hình game, hàm main_game
 #Output: Không có
 def main_menu(screen,main_game):
-     music = "ON"
-     isplaying = True
+     global isplaying
+     if isplaying:
+          music = "ON"
+     else:
+          music = "OFF"
      while True:
           #Gắn ảnh background cho menu
           screen.blit(bgmenu, (0, 0))

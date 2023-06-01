@@ -27,7 +27,7 @@ score = [0,0] #Điểm thi đấu của từng nhân vật
 round_over = False #Cờ đánh dấu kết thúc ván
 round_over_cooldown = 2000 #Đếm ngược khi bắt đầu ván đấu thứ 2 trở đi
 round_over_time = 0 #Thời điểm kết thúc ván đầu
-
+pause = False #Cờ pause
 # Hàm trở về opening lúc vừa vào game + gọi main menu
 # Input: Không có
 # Outut: Không có
@@ -68,6 +68,65 @@ def handle_input(p1, p2, ai, throwSpeed1, throwSpeed2, shurikens1, shurikens2):
                 keys = ai_input
         p2.move(DISPLAYSURF, p1, round_over, keys)
         p2.shuriken(throwSpeed2,shurikens2,p1, keys)
+# Hàm xử lý ngưng pause
+# Input: Không có
+# Outut: Không có
+def unpause():
+    global pause
+    pause = False
+# Hàm xử lý pause
+# Input: Không có
+# Outut: Không có
+def ispause():
+    global pause
+    global round_over
+    global score
+    pause = True
+    #Khi pause sẽ chạy
+    while pause:
+        for event in pygame.event.get():
+            #Bắt sự kiện quit
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            #Bắt sự kiện click chuột
+            elif event.type == pygame.MOUSEBUTTONDOWN: 
+                #Âm thanh click
+                clicksound.play()
+                #Check click nút Yes
+                if BTN_YES.checkForInput(PAUSE_MOUSE_POS):
+                        round_over = False
+                        score[0]=0
+                        score[1]=0
+                        main_menu(DISPLAYSURF, main_game)
+                #check click nút No
+                elif BTN_NO.checkForInput(PAUSE_MOUSE_POS):
+                        unpause()
+                #Cập nhật ảnh
+                pygame.display.update()
+        #Fill màn hình màu trắng
+        DISPLAYSURF.fill((255, 255, 255))
+        #Text
+        TEXT = get_font(60, None).render("ARE YOU SURE TO QUIT", True, "Black")
+        TEXT_RECT = TEXT.get_rect(center=(500, 280))
+
+        # Gắn chữ vào màn hình
+        DISPLAYSURF.blit(TEXT, TEXT_RECT)
+        #Vị trí chuột
+        PAUSE_MOUSE_POS = pygame.mouse.get_pos()
+        #Nút Yes
+        BTN_YES = Button(image=pygame.image.load("./assets/images/Play Rect.png"), pos=(850, 550), 
+                            text_input="YES", font=get_font(50, None), base_color="#d7fcd4", hovering_color="White")
+        #Nút No
+        BTN_NO = Button(image=pygame.image.load("./assets/images/Play Rect.png"), pos=(150, 550), 
+                            text_input="NO", font=get_font(50, None), base_color="#d7fcd4", hovering_color="White")
+        #Đổi màu Nút khi hover và cập nhật nút lên màn hình
+        BTN_YES.changeColor(PAUSE_MOUSE_POS)
+        BTN_YES.update(DISPLAYSURF)
+        BTN_NO.changeColor(PAUSE_MOUSE_POS)
+        BTN_NO.update(DISPLAYSURF)
+        pygame.display.update()
+
 
 # Hàm chủ yếu gọi phần chính của game: gồm khởi tạo nhân vật, hoạt ảnh đánh nhau, chuyển động... 
 # Input: danh sách nhân vật tham gia trận chiến, chế độ chơi, danh sách tên nhân vật, địa hình thi đấu
@@ -143,7 +202,7 @@ def main_game(charaters, mode, character_labels, background):
    
     while running:
         #Tạo độ trễ
-        pygame.time.delay(35)
+        pygame.time.delay(30)
 
         #Tốc độ phóng thiết lập trong khoảng [0,3]
         if throwSpeed1 >= 0:
@@ -160,6 +219,9 @@ def main_game(charaters, mode, character_labels, background):
                 running = False
                 pygame.quit()
                 sys.exit()
+            elif event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    ispause()
             #Bắt sự kiện click chuột
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 #Khi kết thúc round và có player được 2 điểm trước
