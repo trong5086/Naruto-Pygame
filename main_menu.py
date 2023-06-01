@@ -150,8 +150,8 @@ def play(screen,main_game):
                             text_input="BACK", font=get_font(60, None), base_color="White", hovering_color="Green")
           #Thiết lập đổi màu và gắn nút vào màn hình cho 3 nút
           for button in [PLAY_P1_P2, PLAY_P1_BOT, PLAY_BACK]:
-            button.changeColor(PLAY_MOUSE_POS)
-            button.update(screen)
+               button.changeColor(PLAY_MOUSE_POS)
+               button.update(screen)
 
           for event in pygame.event.get():
                if event.type == pygame.QUIT:
@@ -465,7 +465,7 @@ def choose_P1_BOT(screen, main_game):
           BTN_PLAY.changeColor(PLAY_MOUSE_POS)
           BTN_PLAY.update(screen)
           pygame.display.update()
-#Hàm vẽ màn hình main menu sau khi hết opening gồm các options: Play, Instruction, Quit
+#Hàm vẽ màn hình main menu sau khi hết opening gồm các options: Play, Instruction, Music, Quit
 #Input: màn hình game, hàm main_game
 #Output: Không có
 def main_menu(screen,main_game):

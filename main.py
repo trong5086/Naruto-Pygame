@@ -28,7 +28,7 @@ round_over = False #Cờ đánh dấu kết thúc ván
 round_over_cooldown = 2000 #Đếm ngược khi bắt đầu ván đấu thứ 2 trở đi
 round_over_time = 0 #Thời điểm kết thúc ván đầu
 pause = False #Cờ pause
-# Hàm trở về opening lúc vừa vào game + gọi main menu
+# Hàm gọi opening lúc vừa vào game + gọi main menu
 # Input: Không có
 # Outut: Không có
 def intro():

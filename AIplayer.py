@@ -3,7 +3,9 @@ import pygame
 import random
 
 class Player:
-     # Khởi tạo AI Player với danh sách phím nhập, P1, P2 (bot), giải thuật sử dụng là heuristic
+     # Phương thức khởi tạo Bot
+     # Input: Danh sách phím nhập, P1, P2 (bot), giải thuật sử dụng là heuristic
+     # Output: Không có
      def __init__(self, input_dict, player1, player2, ai_scheme = 'heuristic'):
           #Sử dụng giải thuật heuristic
           self.ai_scheme = ai_scheme
@@ -68,9 +70,9 @@ class Player:
           self.sequence = self.walk_left
          
 
-     # Sequence (chứa các random input là các key tùy vào các tình huống phân case ở hàm choose_heuristic())
+     # Phương thức giúp random input các keys nhập từ bàn phím dựa vào các case từ phương thức choose_heuristic, nếu key trả về thì value tăng lên 1 (Bot sẽ hoạt động dựa vào key có value bằng 1)
      # Input: Không có
-     # Output: trả về danh sách các sequence 
+     # Output: trả về danh sách các input keys với 1 key có value bằng 1
      def heuristics(self):
           if self.sequence_index >= len(self.sequence)-1:
                self.sequence = self.choose_heuristic()
@@ -91,7 +93,7 @@ class Player:
                ai_key_dict_copy[i] = 1
           
           return ai_key_dict_copy
-     # Đưa ra sequence dựa vào các case
+     # Phương thức trả về sequence dựa vào các case từ khoảng cách 
      # Input: Không có
      # Output: Danh sách các input keys tùy vào các case ở bên dưới
      def choose_heuristic(self):
@@ -134,43 +136,43 @@ class Player:
                sequence = random.sample(possible_sequences,1)[0]
           return sequence
      
-     # Kiểm tra bot có bên trái P1 hay không ? 
+     # Phương thức giúp kiểm tra bot có bên trái P1 hay không ? 
      # Input: Không có
      # Output: Nếu tọa độ x (tính từ giữa) của bot > P1 thì return True, ngược lại return False
      def is_left(self):
           return self.playera.rect.centerx < self.playerb.rect.centerx
      
-     # Kiểm tra  bot có bên phải P1 hay không ? 
+     # Phương thức kiểm tra bot có bên phải P1 hay không ? 
      # Input: Không có
      # Output: Nếu tọa độ x (tính từ giữa) của bot < P1 thì return True, ngược lại return False
      def is_right(self):
           return self.playera.rect.centerx > self.playerb.rect.centerx
      
-     # Kiểm tra  bot có đang ở xa người chơi hay không ? 
+     # Phương thức kiểm tra  bot có đang ở xa người chơi hay không ? 
      # Input: Khoảng cách để xác định
      # Output: Nếu tọa độ x (tính từ giữa) của P1 - Bot mà lớn hơn hàm scale(tính toán khoảng cách của nhân vật P1 dựa trên tỷ lệ màn hình thực tế và màn hình game) thì return True, ngược lại return False
      def is_far(self, distance = 160):
           return abs(self.playera.rect.centerx - self.playerb.rect.centerx) > self.playera.scale(distance)
 
-     # Kiểm tra  bot có đang ở không xa không gần người chơi hay không ? 
+     # Phương thức kiểm tra  bot có đang ở không xa không gần người chơi hay không ? 
      # Input: Khoảng cách xa để xác định, khoảng cách gần để xác định
      # Output: Nếu không xa, không gần thì return True, ngược lại return False
      def is_medium(self, low_distance = 100, high_distance = 160):
           return (not self.is_far(high_distance)) & (not self.is_close(low_distance))
 
-     # Kiểm tra  bot có đang ở gần người chơi hay không ? 
+     # Phương thức kiểm tra  bot có đang ở gần người chơi hay không ? 
      # Input: Khoảng cách để xác định
      # Output: Nếu tọa độ x (tính từ giữa) của P1 - Bot mà bé hơn hàm scale(tính toán khoảng cách của nhân vật P1 dựa trên tỷ lệ màn hình thực tế và màn hình game) thì return True, ngược lại return False  
      def is_close(self, distance = 100):
           return abs(self.playera.rect.centerx - self.playerb.rect.centerx) < self.playera.scale(distance)
 
-     # Kiểm tra  bot có đang ở phía trên P1 hay không ? 
+     # Phương thức kiểm tra  bot có đang ở phía trên P1 hay không ? 
      # Input: Không có
      # Output: Nếu tọa độ y (tính từ giữa) của Bot bé hơn P1 và P1 vs Bot gần nhau với khoảng cách 20 sẽ return True, ngược lại False   
      def is_on_top(self):
           return (self.playerb.rect.centery < self.playera.rect.centery) & self.is_close(20)
         
-     # Kiểm tra  bot có đang ở phía dưới P1 hay không ? 
+     # Phương thức kiểm tra bot có đang ở phía dưới P1 hay không ? 
      # Input: Không có
      # Output: Nếu tọa độ y (tính từ giữa) của Bot lớn hơn P1 và P1 vs Bot gần nhau với khoảng cách 50 sẽ return True, ngược lại False 
      def is_under(self):

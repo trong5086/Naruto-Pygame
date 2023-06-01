@@ -2,7 +2,7 @@
 import pygame
 #Lớp shuriken
 class Weapons:
-    #Hàm khởi tạo
+    #Phương thức khởi tạo
     #Input: Tọa độ x,y, Kích thước WxH của shuriken, phía mà shuriken sẽ bay tới
     #Output: Không có
     def __init__(self, X = 50, Y = 400, W = 40, H = 60, F = 1):
@@ -16,7 +16,7 @@ class Weapons:
         #Hibox shuriken
         self.hitbox = (self.x, self.y , 40, 40)  
 
-    #Hàm vẽ shuriken
+    #Phương thức vẽ shuriken
     #Input: Màn hình game chính
     #Output: Không có  
     def draw(self, DISPLAYSURF):

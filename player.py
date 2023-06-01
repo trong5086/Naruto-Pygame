@@ -12,7 +12,7 @@ shurikensong = pygame.mixer.Sound('./assets/musics/shuriken.wav')
 #Lớp nhân vật
 class Player:
 
-     #Hàm khởi tạo nhân vật
+     #Phương thức khởi tạo nhân vật
      #Input: loại player, tọa độ, hướng quay, kích thước, phần bù trừ tọa độ, ảnh, số bước di chuyển của mỗi action, có phải bot hay không, tên nhân vật, icon nhân vật
      #Ouput: Không có
      def __init__(self, PLAYER ,X, Y, FLIP, DATA, SPRITES_SHEET, ANIMATION_STEPS, AI, NAME, ICON):
@@ -57,7 +57,7 @@ class Player:
             }
           #Cờ kiểm tra AI
           self.ai = AI
-     #Hàm vẽ icon, vẽ ảnh nhân vật
+     #Phương thức vẽ icon, vẽ ảnh nhân vật
      #Input: Màn hình chính
      #Output: Không có
      def draw(self, DISPLAYSURF):
@@ -69,7 +69,7 @@ class Player:
                DISPLAYSURF.blit(self.icon,(900,10))
           # pygame.draw.rect(DISPLAYSURF,(255,0,0), self.rect)
           DISPLAYSURF.blit(img,(self.rect.x - (self.offset[0] * self.image_scale),self.rect.y-(self.offset[1] * self.image_scale)))
-     #Hàm xử lý, cập nhật hoạt ảnh của nhân vật
+     #Phương thức xử lý, cập nhật hoạt ảnh của nhân vật
      #Input: Màn hình chính, target của nhân vật, cờ kết thúc 1 round, các keys input
      #Output: Không có
      def move(self, DISPLAYSURF, target, round_over, keys): 
@@ -303,7 +303,7 @@ class Player:
                #Nếu biết cooldown lớn hơn 0 sẽ trừ 1 -> Đảm bảo nhân vật không spam skill liên tục
                if self.attack_cooldown > 0:
                     self.attack_cooldown -= 1
-     #Hàm xử lý, cập nhật liên quan tới hoạt ảnh phóng shuriken
+     #Phương thức xử lý, cập nhật liên quan tới hoạt ảnh phóng shuriken
      #Input: tốc độ phóng, danh sách các shurikens, đối thủ, danh sách keys người dùng nhập
      #Output: Không có        
      def shuriken(self,throwSpeed, shurikens, target, keys):
@@ -401,9 +401,9 @@ class Player:
                     #Nếu vượt ngoài màn hình game chính tiến hành xóa bỏ shuriken
                     else:
                          shurikens.pop(shurikens.index(shuriken))
-     #Hàm xử lý, cắt sprites sheet thành những ảnh nhỏ liên tiếp đưa vào trong một danh sách
+     #Phương thức xử lý, cắt sprites sheet thành những ảnh nhỏ liên tiếp đưa vào trong một danh sách
      #Input: sprites_sheet, các bước di hoạt động của 1 action
-     #Output: Không có
+     #Output: Trả lại danh sách ảnh đã cắt
      def loadimg(self, sprites_sheet, animation_steps):
           animation_list = []
           for y, animation in enumerate(animation_steps):
@@ -416,9 +416,9 @@ class Player:
                animation_list.append(temp_img_list)
           return animation_list
      
-     #Hàm tỷ lệ hóa giá trị đầu vào dựa trên tỷ lệ màn hình hiện tại và tỷ lệ màn hình mong muốn
+     #Phương thức tỷ lệ hóa giá trị đầu vào dựa trên tỷ lệ màn hình hiện tại và tỷ lệ màn hình mong muốn
      #Input: giá trị
-     #Output: Không có
+     #Output: Trả lại tỉ lệ đã tính toán
      def scale(self, val):
           monitor_size = (pygame.display.Info().current_w,pygame.display.Info().current_h)
           self.screen_ratio = (16,9)
@@ -430,7 +430,7 @@ class Player:
           if isinstance(val,(list,tuple)):
                return [math.floor((i/60)*self.scale_factor) for i in val]
      
-     #Hàm xử lý hitbox đánh nhau, trừ máu
+     #Phương thức xử lý hitbox đánh nhau, trừ máu
      #Input: target, tọa độ x,y
      #Output: Không có
      def attack(self, DISPLAYSURF, target, x, y):
@@ -449,7 +449,7 @@ class Player:
                                    target.hit = False
                          # pygame.display.update()
 
-     #Hàm cập nhật hoạt ảnh: chết, chạy, ra chiêu, trúng chiêu, đứng,....
+     #Phương thức cập nhật hoạt ảnh: chết, chạy, ra chiêu, trúng chiêu, đứng,....
      #Input: target, tọa độ x,y
      #Output: Không có          
      def update (self): 
@@ -502,7 +502,7 @@ class Player:
                          self.hit = False
                          self.attacking = False
                          self.alive = False
-     #Hàm cập nhật action
+     #Phương thức cập nhật action
      #Input: action mới
      #Output: Không có   
      def update_action(self, new_action):
@@ -511,8 +511,8 @@ class Player:
                self.frame_index = 0
                self.update_time = pygame.time.get_ticks()
 
-     #Hàm xử lý trừ máu khi dính shuriken
-     #Input: action mới
+     #Phương thức xử lý trừ máu khi dính shuriken
+     #Input: Không có
      #Output: Không có
      def Hit(self):
           if self.health > 0:
